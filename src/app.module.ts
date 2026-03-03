@@ -6,6 +6,7 @@ import { ClinicsModule } from './clinics/clinics.module';
 import { ServicesModule } from './services/services.module';
 import { StaffModule } from './staff/staff.module';
 import { BookingsModule } from './bookings/bookings.module';
+import { PaymentsModule } from './payments/payments.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -20,6 +21,7 @@ import configuration from './config/configuration';
     ServicesModule,
     StaffModule,
     BookingsModule,
+    PaymentsModule,
   ],
 })
 export class AppModule { }
