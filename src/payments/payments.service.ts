@@ -71,7 +71,7 @@ export class PaymentsService {
             return { success: true, message: 'Booking not found' };
         }
 
-        if (booking.paymentStatus === PaymentStatus.PAID || booking.paymentStatus === PaymentStatus.DEPOSIT_PAID) {
+        if (booking.paymentStatus === PaymentStatus.PAID) {
             this.logger.log(`Booking ${bookingCode} already paid`);
             return { success: true, message: 'Already paid' };
         }
@@ -88,7 +88,7 @@ export class PaymentsService {
         await this.prisma.booking.update({
             where: { id: booking.id },
             data: {
-                paymentStatus: PaymentStatus.DEPOSIT_PAID,
+                paymentStatus: PaymentStatus.PAID,
                 paymentMethod: 'BANK_TRANSFER',
                 status: booking.status === 'PENDING' ? 'CONFIRMED' : booking.status,
             },
@@ -96,7 +96,7 @@ export class PaymentsService {
 
         await this.createPaymentRecord(booking.id, received, 'BANK_TRANSFER', payload);
 
-        this.logger.log(`Booking ${bookingCode} deposit paid (received: ${received})`);
+        this.logger.log(`Booking ${bookingCode} marked as PAID (received: ${received})`);
         return { success: true, message: 'Deposit confirmed', bookingCode };
     }
 
