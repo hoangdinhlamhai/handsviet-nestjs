@@ -1,11 +1,11 @@
 import {
-    IsString, IsOptional, IsArray, IsUUID, IsDateString, Matches, ArrayMinSize,
+    IsString, IsOptional, IsArray, IsDateString, Matches, ArrayMinSize,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateBookingDto {
     @ApiProperty({ description: 'Clinic ID' })
-    @IsUUID()
+    @IsString()
     salonId: string;
 
     @ApiProperty({ description: 'Customer phone number', example: '0909111111' })
@@ -21,15 +21,15 @@ export class CreateBookingDto {
     @ApiProperty({ description: 'Array of service IDs', type: [String] })
     @IsArray()
     @ArrayMinSize(1)
-    @IsUUID('4', { each: true })
+    @IsString({ each: true })
     serviceIds: string[];
 
     @ApiPropertyOptional({ description: 'Staff/Therapist ID' })
     @IsOptional()
-    @IsUUID()
+    @IsString()
     staffId?: string;
 
-    @ApiProperty({ example: '2025-03-15', description: 'Booking date' })
+    @ApiProperty({ example: '2026-03-15', description: 'Booking date' })
     @IsDateString()
     date: string;
 
