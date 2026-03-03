@@ -5,7 +5,7 @@ import { PrismaService } from '../database/prisma.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingStatusDto } from './dto/update-booking-status.dto';
 import { BookingStatus, PaymentStatus } from '@prisma/client';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class BookingsService {
@@ -239,7 +239,7 @@ export class BookingsService {
 
     private generateCode(): string {
         const ts = Date.now().toString(36).toUpperCase();
-        const rnd = uuidv4().split('-')[0].toUpperCase();
+        const rnd = randomUUID().split('-')[0].toUpperCase();
         return `HV${ts}${rnd}`.substring(0, 12);
     }
 
