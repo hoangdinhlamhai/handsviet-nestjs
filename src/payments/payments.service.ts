@@ -59,7 +59,7 @@ export class PaymentsService {
             return { success: true, message: 'No booking code found' };
         }
 
-        const bookingCode = `HV${match[1]}`.substring(0, 12);
+        const bookingCode = match[1];
         this.logger.log(`Looking for booking code: ${bookingCode}, amount: ${transferAmount}`);
 
         const booking = await this.prisma.booking.findUnique({
