@@ -53,13 +53,14 @@ export class PaymentsService {
             return { success: true, message: 'Ignored (outgoing)' };
         }
 
-        const match = content?.match(/HV\s*(\w+)/i);
+        // Match full booking code (starts with HV, e.g. HVMMALLUVMED)
+        const match = content?.match(/(HV[A-Z0-9]{6,})/i);
         if (!match) {
             this.logger.warn(`No booking code found in content: ${content}`);
             return { success: true, message: 'No booking code found' };
         }
 
-        const bookingCode = match[1];
+        const bookingCode = match[1].toUpperCase();
         this.logger.log(`Looking for booking code: ${bookingCode}, amount: ${transferAmount}`);
 
         const booking = await this.prisma.booking.findUnique({
